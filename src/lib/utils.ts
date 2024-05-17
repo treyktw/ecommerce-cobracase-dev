@@ -42,5 +42,6 @@ export function constructMetaData({
       creator: "@treyktw.dev"
     },
     icons,
+    metadataBase: new URL("https://ecommerce-cobracase-dev.vercel.app/")
   }
 }
