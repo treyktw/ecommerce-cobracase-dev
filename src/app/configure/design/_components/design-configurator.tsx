@@ -45,7 +45,7 @@ const DesignConfigurator = ({ configId, imageUrl, imageDimensions }: DesignConfi
   const { toast } = useToast();
   const router = useRouter();
 
-  const { mutate: saveConfig } = useMutation({
+  const { mutate: saveConfig, isPending } = useMutation({
     mutationKey: ['save-config'],
     mutationFn: async (args: SaveConfigArgs) => {
       await Promise.all([saveConfiguration(), _saveConfig(args)])
@@ -312,7 +312,7 @@ const DesignConfigurator = ({ configId, imageUrl, imageDimensions }: DesignConfi
               <p className="font-medium whitespace-nowrap">
                 {formatPrice((BASE_PRICE + options.finish.price + options.material.price) / 100)}  
               </p> 
-              <Button onClick={() => saveConfig({ configId, color:options.color.value, finish:options.finish.value, material:options.material.value, model: options.model.value })} size="sm" className="w-full">
+              <Button onClick={() => saveConfig({ configId, color:options.color.value, finish:options.finish.value, material:options.material.value, model: options.model.value })} size="sm" className="w-full" isLoading={isPending} disabled={isPending} loadingText="Saving">
                 Continue
                 <ArrowRight className="w-4 h-4 inline ml-1.5"/>
               </Button>

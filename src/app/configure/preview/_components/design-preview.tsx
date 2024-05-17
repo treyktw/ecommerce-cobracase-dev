@@ -41,7 +41,7 @@ const DesignPreview = ({ configuration }: { configuration: Configuration }) => {
     setShowConfetti(true)
   }, []);
 
-  const { mutate: createPaymentSession } = useMutation({
+  const { mutate: createPaymentSession, isPending } = useMutation({
     mutationKey: ["get-checkout-session"],
     mutationFn: createCheckoutSession,
     onSuccess: ({url}) => {
@@ -81,12 +81,12 @@ const DesignPreview = ({ configuration }: { configuration: Configuration }) => {
 
       <LoginModel isOpen={isLoginModelOpen} setIsOpen={setIsLoginModelOpen} />
 
-      <div className="mt-20 grid grid-cols-1 text-sm sm:grid-cols-12 sm:grid-rows-1 sm:gap-x-6 md:gap-x-8 lg:gap-x-12">
-        <div className="sm:col-span-4 md:col-span-3 md:row-span-2 md:row-end-2">
-          <Phone imgSrc={configuration.croppedImageUrl!} className={cn(`bg-${tw}`)} />
+      <div className="mt-20 flex flex-col  items-center md:grid text-sm sm:grid-cols-12 sm:grid-rows-1 sm:gap-x-6 md:gap-x-8 lg:gap-x-12">
+        <div className="md:col-span-4 lg:col-span-3 md:row-span-2 md:row-end-2">
+          <Phone imgSrc={configuration.croppedImageUrl!} className={cn(`bg-${tw}`, "max-w-[150px] md:max-w-full")} />
         </div>
 
-        <div className="mt-6 sm:col-span-9 sm:mt-0 md:row-end-1">
+        <div className="mt-6 sm:col-span-9 md:row-end-1">
           <h3 className="text-3xl font-bold tracking-tight text-gray-900">
             Your {modelLabel} case
           </h3>
@@ -158,7 +158,7 @@ const DesignPreview = ({ configuration }: { configuration: Configuration }) => {
             </div>
 
             <div className="mt-8 flex justify-end pb-12">
-              <Button onClick={() => handleCheckOut()} className="px-4 sm:px-6 lg:px-8">
+              <Button onClick={() => handleCheckOut()} className="px-4 sm:px-6 lg:px-8" isLoading={isPending} disabled={isPending} loadingText="Checking Out">
                 CheckOut
                 <ArrowRight className="h-4 w-4 ml-1.5 inline"/>
               </Button>
